@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -57,10 +58,19 @@ public class SecurityFilter {
 //		return new InMemoryUserDetailsManager(userDetails, userDetails2);
 //	}	
 	
+//	Old method here only plain values are passed
+//	@Bean
+//	public AuthenticationProvider authenticationProvider() {
+//		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//		authenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+//		authenticationProvider.setUserDetailsService(userDetailsService);
+//		return authenticationProvider;
+//	}
+	
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-		authenticationProvider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
+		authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder(12));
 		authenticationProvider.setUserDetailsService(userDetailsService);
 		return authenticationProvider;
 	}

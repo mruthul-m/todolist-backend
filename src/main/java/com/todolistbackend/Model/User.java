@@ -39,6 +39,7 @@ public class User {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedAt;
+	
 	public Long getId() {
 		return id;
 	}

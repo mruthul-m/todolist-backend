@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todolistbackend.Model.User;
@@ -18,6 +19,7 @@ import com.todolistbackend.repo.LoginRepository;
 public class LoginService  implements UserDetailsService{
 	
 	static Logger log = Logger.getLogger("Login Logger");
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 	
 
 	final LoginRepository loginRepo;
@@ -31,6 +33,7 @@ public class LoginService  implements UserDetailsService{
 		if (loginRepo.existsById(user.getId())) {
 			return false;
 		}
+		user.setPassword(encoder.encode(user.getPassword()));
 		loginRepo.save(user);
 		return true;
 		
