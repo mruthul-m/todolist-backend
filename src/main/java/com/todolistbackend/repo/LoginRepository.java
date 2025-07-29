@@ -1,9 +1,9 @@
-package com.todolistbackend.repositories;
+package com.todolistbackend.repo;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.todolistbackend.Models.User;
+import com.todolistbackend.Model.User;
 
 public interface LoginRepository extends CrudRepository<User, Long> {
-
+	User findByName(String username);
 }

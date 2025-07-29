@@ -1,4 +1,4 @@
-package com.todolistbackend.controllers;
+package com.todolistbackend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todolistbackend.Models.User;
-import com.todolistbackend.services.LoginService;
+import com.todolistbackend.Model.User;
+import com.todolistbackend.service.LoginService;
 
 import jakarta.validation.Valid;
 

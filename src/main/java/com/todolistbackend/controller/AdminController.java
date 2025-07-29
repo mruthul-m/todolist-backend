@@ -1,4 +1,4 @@
-package com.todolistbackend.controllers;
+package com.todolistbackend.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 

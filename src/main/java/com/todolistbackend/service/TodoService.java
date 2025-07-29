@@ -1,4 +1,4 @@
-package com.todolistbackend.services;
+package com.todolistbackend.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,9 +7,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.todolistbackend.Models.TodoList;
-import com.todolistbackend.repositories.LoginRepository;
-import com.todolistbackend.repositories.TodoRepository;
+import com.todolistbackend.Model.TodoList;
+import com.todolistbackend.repo.LoginRepository;
+import com.todolistbackend.repo.TodoRepository;
 
 @Service
 public class TodoService {

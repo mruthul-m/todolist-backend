@@ -1,4 +1,4 @@
-package com.todolistbackend.controllers;
+package com.todolistbackend.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todolistbackend.Models.TodoList;
-import com.todolistbackend.services.TodoService;
+import com.todolistbackend.Model.TodoList;
+import com.todolistbackend.service.TodoService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
