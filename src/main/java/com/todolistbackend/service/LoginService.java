@@ -16,7 +16,7 @@ import com.todolistbackend.repo.LoginRepository;
 
 
 @Service
-public class LoginService  implements UserDetailsService{
+public class LoginService {
 	
 	static Logger log = Logger.getLogger("Login Logger");
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
@@ -49,15 +49,5 @@ public class LoginService  implements UserDetailsService{
 		return (User) null;
 	}
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		User user = loginRepo.findByName(username);
-		if (user == null) {
-			System.out.println("User is not exist!");
-			throw new UsernameNotFoundException("User is not found");
-		}
-		return new UserPrinciple(user);
-	}
 
 }
