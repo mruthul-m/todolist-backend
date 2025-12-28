@@ -1,2 +1,12 @@
+#eclipse
+.classpath
+.project
+.settings/
 src/main/resources/application.properties
-target
+
+#maven
+target/
+
+#H2-Local DB
+demodb.mv.db
+demodb.trace.db
