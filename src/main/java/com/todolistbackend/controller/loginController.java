@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.todolistbackend.Model.User;
+import com.todolistbackend.dto.UserRequestDto;
+import com.todolistbackend.dto.UserResponseDto;
 import com.todolistbackend.service.LoginService;
 
 import jakarta.validation.Valid;
@@ -26,16 +27,19 @@ public class loginController {
 	}
 	
 	@GetMapping("/getUser")
-	public User getUser(@RequestParam("id") Long id) {
-		User reqUser = loginService.getSingleUser(id);
-		return reqUser;
+	public ResponseEntity<UserResponseDto> getUser(@RequestParam("id") Long id) {
+		UserResponseDto resUser = loginService.getSingleUser(id);
+		if (!(resUser == null))
+			return new ResponseEntity<UserResponseDto>(resUser, HttpStatus.CREATED);
+		return new ResponseEntity<UserResponseDto>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PostMapping("/createUser")
-	public ResponseEntity<String> saveUser(@Valid @RequestBody User user) {
-		if (loginService.saveUser(user))
-		return new ResponseEntity<String>("New user has been created.",HttpStatus.CREATED);
-		return new ResponseEntity<String>("User already exists", HttpStatus.BAD_REQUEST);
+	public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto requestDto) {
+		UserResponseDto responseDTO = loginService.saveUser(requestDto);
+		if (!(responseDTO == null))
+		return new ResponseEntity<UserResponseDto>(responseDTO,HttpStatus.CREATED);
+		return new ResponseEntity<UserResponseDto>(HttpStatus.CONFLICT);
 	}
 	
 }

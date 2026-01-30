@@ -1,12 +1,19 @@
 package com.todolistbackend.Model;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
@@ -16,11 +23,12 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
 	
 
 	@Id
 	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank(message = "Name should be present")
@@ -94,6 +102,18 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", password=" + password + ", todos=" + todos + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return getName();
 	}
 	
 

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -28,7 +27,7 @@ public class UserController {
 	
 	final TodoService todoService;
 	
-	@Autowired
+	
 	public UserController(TodoService todoService) {
 		this.todoService = todoService;
 	}
@@ -94,5 +93,10 @@ public class UserController {
 	public CsrfToken getCSRFtoken(HttpServletRequest req) {
 		return (CsrfToken) req.getAttribute("_csrf");
 		
+	}
+	
+	@GetMapping("/public")
+	public String greeting() {
+		return "greeting";
 	}
 }
