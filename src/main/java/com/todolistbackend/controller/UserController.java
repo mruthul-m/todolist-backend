@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +23,7 @@ import com.todolistbackend.service.TodoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
+@RequestMapping("/{userId}")
 @RestController
 public class UserController {
 	
@@ -35,22 +38,23 @@ public class UserController {
 	static Logger logger = Logger.getLogger("User Controller");
 
 	@PostMapping("/createList")
-	public ResponseEntity<TodoList> createList(@Valid @RequestBody TodoList list){
+	public ResponseEntity<TodoList> createList(@RequestBody TodoList list, @PathVariable("userId") Long userId){
+		list.setFk_user_id(userId);
 		Optional<TodoList> newList = todoService.saveList(list);
 		if (newList.isEmpty()) return ResponseEntity.badRequest().build();
 		return ResponseEntity.ok().body(newList.get());
 	}
 	
 	@GetMapping("/getSingleList")
-	public TodoList getSingleList(@RequestParam(name = "lead") Long id) {
+	public TodoList getSingleList(@RequestParam(name = "lid") Long id) {
 		Optional<TodoList> list =  todoService.getSingleList(id);
 		if (list.isPresent()) return list.get();
 		return new TodoList();
 	}
 	
 	@GetMapping("/getAllList")
-	public List<TodoList> getAllList() {
-		List<TodoList> allList =  todoService.getAllList();
+	public List<TodoList> getAllList(@PathVariable("userId") Long userId) {
+		List<TodoList> allList =  todoService.getAllList(userId);
 		return allList;
 	}
 	

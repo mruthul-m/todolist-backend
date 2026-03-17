@@ -38,7 +38,7 @@ public class TodoService {
 			return list;
 	}
 	
-	public List<TodoList> getAllList() {
+	public List<TodoList> getAllList(Long userId) {
 		List<TodoList> fullList = (List<TodoList>) todoRepository.findAll();
 		return fullList;
 	}
