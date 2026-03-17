@@ -1,10 +1,8 @@
 package com.todolistbackend.service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,7 +22,6 @@ public class LoginService implements UserDetailsService {
 
 	final LoginRepository loginRepo;
 
-	@Autowired
 	public LoginService(LoginRepository loginRepo) {
 		this.loginRepo = loginRepo;
 	}
@@ -61,10 +58,9 @@ public class LoginService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		Optional<User> userDetails = loginRepo.findByName(username);
+		return 
+				(UserDetails) loginRepo.findByName(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
-		return userDetails.get();
 
 	}
 

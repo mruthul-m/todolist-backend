@@ -7,30 +7,29 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.todolistbackend.dto.UserLoginDto;
+
 public class UserPrinciple implements UserDetails{
 	
-	User user;
+	UserLoginDto user;
 	
-	public UserPrinciple(User user) {
+	public UserPrinciple(UserLoginDto user) {
 		this.user = user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return Collections.singleton(new SimpleGrantedAuthority("USER"));
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return user.getName();
+		return user.getUserName();
 	}
 
 }

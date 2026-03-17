@@ -1,13 +1,10 @@
 package com.todolistbackend.Model;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -23,8 +20,10 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails{
+public class User {
 	
+
+
 
 	@Id
 	@Column(name = "user_id")
@@ -104,17 +103,6 @@ public class User implements UserDetails{
 				+ createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return getName();
-	}
 	
 
 }
