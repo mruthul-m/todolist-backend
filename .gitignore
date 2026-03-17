@@ -2,11 +2,13 @@
 .classpath
 .project
 .settings/
+.idea
+
 src/main/resources/application.properties
 
 #maven
 target/
 
 #H2-Local DB
-demodb.mv.db
-demodb.trace.db
+testdb.mv.db
+testdb.trace.db
