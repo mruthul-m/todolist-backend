@@ -39,7 +39,7 @@ public class TodoService {
 	}
 	
 	public List<TodoList> getAllList(Long userId) {
-		List<TodoList> fullList = (List<TodoList>) todoRepository.findAll();
+		List<TodoList> fullList = (List<TodoList>) todoRepository.findByUserId(userId);
 		return fullList;
 	}
 	
