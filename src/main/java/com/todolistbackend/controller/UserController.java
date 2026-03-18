@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.todolistbackend.Model.TodoList;
+import com.todolistbackend.dto.TodosDto;
 import com.todolistbackend.service.TodoService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,28 +39,30 @@ public class UserController {
 	static Logger logger = Logger.getLogger("User Controller");
 
 	@PostMapping("/createList")
-	public ResponseEntity<TodoList> createList(@RequestBody TodoList list, @PathVariable("userId") Long userId){
+	public ResponseEntity<TodosDto> createList(@RequestBody TodoList list, @PathVariable("userId") Long userId){
 		list.setFk_user_id(userId);
-		Optional<TodoList> newList = todoService.saveList(list);
+		Optional<TodosDto> newList = todoService.saveList(list);
 		if (newList.isEmpty()) return ResponseEntity.badRequest().build();
 		return ResponseEntity.ok().body(newList.get());
 	}
 	
-	@GetMapping("/getSingleList")
-	public TodoList getSingleList(@RequestParam(name = "lid") Long id) {
-		Optional<TodoList> list =  todoService.getSingleList(id);
-		if (list.isPresent()) return list.get();
-		return new TodoList();
+	@GetMapping("/getSingleList/{id}")
+	public  ResponseEntity<TodosDto> getTodo( @PathVariable("id") Long id) {
+		Optional<TodosDto> list =   todoService.getSingleList(id);
+		if (list.isPresent()) {
+			return ResponseEntity.ok().body(list.get());
+		}
+		return ResponseEntity.badRequest().build();
 	}
 	
 	@GetMapping("/getAllList")
-	public List<TodoList> getAllList(@PathVariable("userId") Long userId) {
-		List<TodoList> allList =  todoService.getAllList(userId);
+	public List<TodosDto> getAllList(@PathVariable("userId") Long userId) {
+		List<TodosDto> allList =  todoService.getAllList(userId);
 		return allList;
 	}
 	
-	@GetMapping("/deleteList")
-	public ResponseEntity<String> deleteList(@RequestParam(name = "lead") Long id) {
+	@GetMapping("/deleteList/{id}")
+	public ResponseEntity<String> deleteList(@PathVariable("id") Long id) {
 		if (todoService.deleteList(id))	 return ResponseEntity.ok().body("List has been deleted.");
 		return ResponseEntity.badRequest().body("List does not exists.");
 
@@ -70,8 +73,8 @@ public class UserController {
 		return todoService.deleteAllList();
 	}
 	
-	@PatchMapping("/updateList")
-	public ResponseEntity<TodoList> updateList(@RequestBody TodoList body, @RequestParam(name = "lead") Long id) {
+	@PatchMapping("/updateList/{id}")
+	public ResponseEntity<TodoList> updateList(@RequestBody TodoList body, @PathVariable("id") Long id) {
 		if (body.getId() == null) body.setId(id);
 		Optional<TodoList> newList = todoService.updateList(body);
 		return newList.map(todo -> ResponseEntity.status(HttpStatus.ACCEPTED).body(todo)).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
