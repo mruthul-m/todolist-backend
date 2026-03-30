@@ -4,27 +4,31 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todolistbackend.Model.TodoList;
-import com.todolistbackend.repo.LoginRepository;
+import com.todolistbackend.dto.TodosDto;
 import com.todolistbackend.repo.TodoRepository;
 
 @Service
 public class TodoService {
 
-	@Autowired
-	TodoRepository todoRepository;
+	final TodoRepository todoRepository;
 	
-	@Autowired
-	LoginRepository loginRepository;
+	public TodoService(TodoRepository todoRepository) {
+		this.todoRepository = todoRepository;
+	}
+	
 
-	public Optional<TodoList> saveList(TodoList list) {	
+	public Optional<TodosDto> saveList(TodoList list) {	
 		TodoList newList;
 		try {
 			newList = todoRepository.save(list);
-			return Optional.of(newList);
+			return Optional.of(new TodosDto(
+					newList.getId(),
+					newList.getTaskHeading(),
+					newList.getTaskContent(), 
+					newList.getCreatedAt()));
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage().split("\\(")[0].trim());
@@ -33,13 +37,21 @@ public class TodoService {
 		return Optional.empty();
 	}
 	
-	public Optional<TodoList> getSingleList(Long id) {
-			Optional<TodoList> list = todoRepository.findById(id);
-			return list;
+	public Optional<TodosDto> getSingleList(Long id) {
+			Optional<TodoList> todo = todoRepository.findById(id);
+			if (todo.isPresent()) {
+				return Optional.of(new 
+						TodosDto(todo.get().getId(),
+								todo.get().getTaskHeading(),
+								todo.get().getTaskContent(),
+								todo.get().getCreatedAt()));
+			}else
+				return Optional.empty();
+			
 	}
 	
-	public List<TodoList> getAllList() {
-		List<TodoList> fullList = (List<TodoList>) todoRepository.findAll();
+	public List<TodosDto> getAllList(Long userId) {
+		List<TodosDto> fullList = (List<TodosDto>) todoRepository.findByUserId(userId);		
 		return fullList;
 	}
 	
@@ -52,28 +64,31 @@ public class TodoService {
 		return false;
 	}
 	
-	public boolean deleteAllList() {
-		todoRepository.deleteAll();
-		return true;
-	}
-	
-	public Optional<TodoList> updateList(TodoList list) {
-		Optional<TodoList> oldList = todoRepository.findById(list.getId());
-		if (oldList.isEmpty()) return oldList;
-		if (list.getTaskHeading() == null) list.setTaskHeading(oldList.get().getTaskHeading());
-		if (list.getTaskContent() == null) list.setTaskContent(oldList.get().getTaskContent());
-		if (list.getFk_user_id() == null) list.setFk_user_id(oldList.get().getFk_user_id());
-		if (list.getCreatedAt() == null) list.setCreatedAt(oldList.get().getCreatedAt());
-		list.setUpdatedAt(LocalDateTime.now());
-		todoRepository.save(list);
-		return todoRepository.findById(list.getId());
+	public boolean deleteAllList(Long userId) {
+		return 0 < todoRepository.deleteAllByUserId(userId);
 		
 	}
 	
-	public Optional<TodoList> replaceList(TodoList list, Long id) {
-		if (! deleteList(id)) return Optional.empty();
-		TodoList newList =  todoRepository.save(list);
-		return Optional.of(newList);
+	public Optional<TodosDto> updateList(TodoList list) {
+		Optional<TodoList> oldList = todoRepository.findById(list.getId());
+		if (oldList.isEmpty()) return Optional.empty();
+		if (list.getTaskHeading() == null) list.setTaskHeading(oldList.get().getTaskHeading());
+		if (list.getTaskContent() == null) list.setTaskContent(oldList.get().getTaskContent());
+		list.setCreatedAt(oldList.get().getCreatedAt());
+		list.setUpdatedAt(LocalDateTime.now());
+		list = todoRepository.save(list);
+		System.out.println(list);
+		return Optional.of(new TodosDto(list.getId(), list.getTaskHeading(), list.getTaskContent(), list.getCreatedAt()));
+		
+	}
+	
+	public Optional<TodosDto> replaceList(TodoList list) {
+		LocalDateTime newTime = LocalDateTime.now();
+		list.setCreatedAt(newTime);
+		list.setUpdatedAt(newTime);
+		list = todoRepository.save(list);
+		return Optional.of(new TodosDto(list.getId(), list.getTaskHeading(), list.getTaskContent(), list.getCreatedAt()));
+		
 	}
 
 }
