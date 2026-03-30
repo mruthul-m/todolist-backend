@@ -87,8 +87,7 @@ public class TodoList {
 		return "TodoList [id=" + id + ", taskHeading=" + taskHeading + ", taskContent=" + taskContent + ", status="
 				+ status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", fk_user_id=" + fk_user_id + "]";
 	}
-	
-	
 
+	
 
 }

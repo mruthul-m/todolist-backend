@@ -23,8 +23,6 @@ import jakarta.validation.constraints.NotEmpty;
 public class User {
 	
 
-
-
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,7 +62,6 @@ public class User {
 	}
 	
 
-
 	public String getPassword() {
 		return password;
 	}
@@ -96,13 +93,6 @@ public class User {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", todos=" + todos + ", createdAt="
-				+ createdAt + ", updatedAt=" + updatedAt + "]";
-	}
-
 	
 
 }
