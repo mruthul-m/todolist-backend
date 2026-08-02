@@ -22,6 +22,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
 	final JwtService jwtService;
 	final LoginService loginService;
+	
 	public JwtAuthFilter(JwtService jwtService, LoginService loginService) {
 		this.jwtService = jwtService;
 		this.loginService = loginService;
@@ -36,21 +37,18 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 		String username = null;
 
 		if (authHeader != null && authHeader.startsWith("Bearer ")) {
-			token = authHeader.substring(7); // every bearer token starts as 'bearer <token>', so just trims the first 7
-												// characters.
+			
+			// every bearer token starts as 'bearer <token>', so just trims the first 7 characters.
+			token = authHeader.substring(7); 
 			username = jwtService.extractUsername(token);
 
-			// 2. Validate token and get user details (Logic varies by provider)
 			if (username != null &&  SecurityContextHolder.getContext().getAuthentication() == null) {
 				UserDetails userDetails =  loginService.loadUserByUsername(username);
 				if(jwtService.validateToke(username, userDetails)) {
 					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-				}
-					
-				
-				
+				}		
 			}
 
 		}

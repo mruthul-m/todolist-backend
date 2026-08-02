@@ -18,7 +18,7 @@ public interface TodoRepository extends JpaRepository<TodoList, Long>{
 	
 	
 	@Query("""
-			SELECT new com.todolistbackend.dto.TodosDto(t.taskHeading, t.taskContent, t.createdAt)
+			SELECT new com.todolistbackend.dto.TodosDto(t.id, t.taskHeading, t.taskContent, t.createdAt)
 			FROM TodoList t
 			WHERE t.fk_user_id = :userid
 			""")

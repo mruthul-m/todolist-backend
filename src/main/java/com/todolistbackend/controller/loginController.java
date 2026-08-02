@@ -57,7 +57,7 @@ public class loginController {
 	public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto requestDto) {
 		UserResponseDto responseDTO = loginService.saveUser(requestDto);
 		if (!(responseDTO == null))
-		return new ResponseEntity<UserResponseDto>(responseDTO,HttpStatus.CREATED);
+			return new ResponseEntity<UserResponseDto>(responseDTO,HttpStatus.CREATED);
 		return new ResponseEntity<UserResponseDto>(HttpStatus.CONFLICT);
 	}
 	
