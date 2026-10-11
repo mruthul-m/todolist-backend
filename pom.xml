@@ -74,4 +74,30 @@
 			<version>0.12.6</version>
 		</dependency>
 	</dependencies>
+
+
+	<build>
+		<plugins>
+			<!-- Springboot plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>   
+
+			<!-- Jar plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.todolistbackend.TodoListApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>

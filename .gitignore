@@ -10,5 +10,8 @@ src/main/resources/application.properties
 target/
 
 #H2-Local DB
-testdb.mv.db
-testdb.trace.db
+test.mv.db
+test.trace.db
+
+# vs-code
+.vscode/
