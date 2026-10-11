@@ -54,11 +54,11 @@ public class loginController {
 	}
 	
 	@PostMapping("/createUser")
-	public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<String> saveUser(@Valid @RequestBody UserRequestDto requestDto) {
 		UserResponseDto responseDTO = loginService.saveUser(requestDto);
 		if (!(responseDTO == null))
-			return new ResponseEntity<UserResponseDto>(responseDTO,HttpStatus.CREATED);
-		return new ResponseEntity<UserResponseDto>(HttpStatus.CONFLICT);
+			return ResponseEntity.status(201).body(responseDTO.toString());
+		return ResponseEntity.status(409).body("User already exists.");
 	}
 	
 	

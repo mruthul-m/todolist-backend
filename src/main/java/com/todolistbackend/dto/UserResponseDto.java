@@ -18,4 +18,10 @@ public class UserResponseDto {
 	public void setUserName(String userName) {
 		UserName = userName;
 	}
+
+	@Override
+	public String toString() {
+		
+		return String.format("UserID: %d,\nUserName: %s", getUserId(), getUserName());
+	}
 }

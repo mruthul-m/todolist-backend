@@ -42,7 +42,6 @@ public class UserController {
 	public ResponseEntity<TodosDto> createList(@RequestBody TodoList list, @PathVariable("userId") Long userId){
 		logger.info("Attempting to create new TodoList");
 		list.setFk_user_id(userId);
-		System.out.println(list); // to be deleted
 		Optional<TodosDto> newList = todoService.saveList(list);
 		if (newList.isEmpty()) {
 			logger.warning("Issue while creating new Todo");
@@ -56,8 +55,11 @@ public class UserController {
 	public  ResponseEntity<TodosDto> getTodo( @PathVariable("id") Long id) {
 		Optional<TodosDto> list =   todoService.getSingleList(id);
 		if (list.isPresent()) {
+			logger.info("attempt success, list got fetched correctly ");
 			return ResponseEntity.ok().body(list.get());
 		}
+
+		logger.warning("Action failed!, check the URI..");
 		return ResponseEntity.badRequest().build();
 	}
 	
@@ -69,7 +71,12 @@ public class UserController {
 	
 	@DeleteMapping("/deleteList/{id}")
 	public ResponseEntity<String> deleteList(@PathVariable("id") Long id) {
-		if (todoService.deleteList(id))	 return ResponseEntity.ok().body("List has been deleted.");
+		if (todoService.deleteList(id)){
+			logger.info("Deleted successfully.");
+			return ResponseEntity.ok().body("List has been deleted.");
+		}	 
+
+		logger.warning("attempt failed: deleteList");
 		return ResponseEntity.badRequest().body("List does not exists.");
 
 	}
