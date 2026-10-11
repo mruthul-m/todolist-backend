@@ -3,7 +3,6 @@ package com.todolistbackend.service;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
