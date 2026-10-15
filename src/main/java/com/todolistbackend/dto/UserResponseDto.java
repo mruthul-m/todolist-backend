@@ -20,8 +20,7 @@ public class UserResponseDto {
 	}
 
 	@Override
-	public String toString() {
-		
-		return String.format("UserID: %d,\nUserName: %s", getUserId(), getUserName());
+	public String toString() {		
+		return String.format("{UserID: %d,\nUserName: %s}", getUserId(), getUserName());
 	}
 }
