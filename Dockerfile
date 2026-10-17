@@ -1,5 +1,5 @@
 # Stage 1 : Build
-FROM eclipse-eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /app
 COPY mvnw  .mvn/ pom.xml ./
 RUN ./mvnw dependency:go-offline -B 
