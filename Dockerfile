@@ -5,7 +5,7 @@ COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline -B 
 COPY src src
-RUN ./mvnw pakcage -DskipTests -B 
+RUN ./mvnw package -DskipTests -B 
 
 # Stage 2 : Extract Layers 
 FROM eclipse-temurin:21-jdk AS extractor
