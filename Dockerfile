@@ -1,10 +1,11 @@
 # Stage 1 : Build
-FROM eclipse-eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /app
-COPY mvnw  .mvn/ pom.xml ./
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline -B 
 COPY src src
-RUN ./mvnw pakcage -DskipTests -B 
+RUN ./mvnw package -DskipTests -B 
 
 # Stage 2 : Extract Layers 
 FROM eclipse-temurin:21-jdk AS extractor
@@ -18,5 +19,5 @@ WORKDIR /app
 COPY --from=extractor /app/dependencies/ ./
 COPY --from=extractor /app/spring-boot-loader/ ./
 COPY --from=extractor /app/application/ ./ 
-EXPOSE 9011
+EXPOSE 8002
 ENTRYPOINT [ "java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "org.springframework.boot.loader.launch.JarLauncher" ]
