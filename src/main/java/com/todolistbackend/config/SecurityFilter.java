@@ -39,7 +39,7 @@ public class SecurityFilter {
 				.headers(headers -> headers.frameOptions(frame -> frame.disable()))
 				.authorizeHttpRequests(
 						req -> req.requestMatchers("/h2-console/**", "/auth", "/createUser").permitAll().anyRequest().authenticated())
-//				.httpBasic(Customizer.withDefaults()) // enables postman like application basic authentication
+				.httpBasic(Customizer.withDefaults()) // enables postman like application basic authentication
 				.formLogin(Customizer.withDefaults()) // enables forms in the web page
 				// .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
@@ -66,7 +66,7 @@ public class SecurityFilter {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization	"));
+		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

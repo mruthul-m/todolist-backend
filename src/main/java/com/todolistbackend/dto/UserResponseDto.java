@@ -1,10 +1,18 @@
 package com.todolistbackend.dto;
 
 
+
 public class UserResponseDto {
 	
 	private Long userId;
 	private String UserName;
+	
+	public UserResponseDto() {
+	}
+	
+	public UserResponseDto(String username) {
+		this.UserName = username;
+	}
 	
 	public Long getUserId() {
 		return userId;
@@ -23,4 +31,6 @@ public class UserResponseDto {
 	public String toString() {		
 		return String.format("{UserID: %d,\nUserName: %s}", getUserId(), getUserName());
 	}
+	
+
 }
