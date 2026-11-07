@@ -15,7 +15,5 @@ public class UserExistException extends Exception{
 	public void setUserResponseDto(UserResponseDto userResponseDto) {
 		this.userResponseDto = userResponseDto;
 	}
-	
-	
 
 }
