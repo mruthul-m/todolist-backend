@@ -3,7 +3,6 @@ package com.todolistbackend.service;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todolistbackend.Model.User;
+import com.todolistbackend.customexceptions.UserExistException;
 import com.todolistbackend.dto.UserRequestDto;
 import com.todolistbackend.dto.UserResponseDto;
 import com.todolistbackend.repo.LoginRepository;
@@ -27,7 +27,7 @@ public class LoginService implements UserDetailsService {
 		this.loginRepo = loginRepo;
 	}
 
-	public UserResponseDto saveUser(UserRequestDto userDTO) {
+	public UserResponseDto saveUser(UserRequestDto userDTO) throws UserExistException {
 
 		if (!loginRepo.existsByName(userDTO.getName())) {
 			User user = new User();
@@ -41,7 +41,8 @@ public class LoginService implements UserDetailsService {
 
 			return responseDto;
 		}
-		return (UserResponseDto) null;
+		
+		throw new UserExistException("UserId exists", new UserResponseDto(userDTO.getName()));
 	}
 
 	public UserResponseDto getSingleUser(Long id) {

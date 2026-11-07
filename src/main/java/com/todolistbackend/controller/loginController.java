@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.todolistbackend.customexceptions.UserExistException;
+import com.todolistbackend.dto.ApiResponse;
 import com.todolistbackend.dto.UserLoginDto;
 import com.todolistbackend.dto.UserRequestDto;
 import com.todolistbackend.dto.UserResponseDto;
@@ -54,11 +56,12 @@ public class loginController {
 	}
 	
 	@PostMapping("/createUser")
-	public ResponseEntity<UserResponseDto> saveUser(@Valid @RequestBody UserRequestDto requestDto) {
+	public ResponseEntity<ApiResponse<UserResponseDto>> saveUser(@Valid @RequestBody UserRequestDto requestDto) throws UserExistException {
+		
 		UserResponseDto responseDTO = loginService.saveUser(requestDto);
-		if (!(responseDTO == null))
-			return new ResponseEntity<UserResponseDto>(responseDTO,HttpStatus.CREATED);
-		return new ResponseEntity<UserResponseDto>(HttpStatus.CONFLICT);
+		ApiResponse<UserResponseDto> response = new ApiResponse<>(true, "User created successfully", responseDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+				
 	}
 	
 	
