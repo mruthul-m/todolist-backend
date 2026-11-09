@@ -9,6 +9,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -40,8 +41,8 @@ public class SecurityFilter {
 				.authorizeHttpRequests(
 						req -> req.requestMatchers("/h2-console/**", "/auth", "/createUser").permitAll().anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults()) // enables postman like application basic authentication
-				.formLogin(Customizer.withDefaults()) // enables forms in the web page
-				// .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//				.formLogin(Customizer.withDefaults()) // enables forms in the web page
+				 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
 
