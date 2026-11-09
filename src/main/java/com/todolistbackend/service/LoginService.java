@@ -42,7 +42,7 @@ public class LoginService implements UserDetailsService {
 			return responseDto;
 		}
 		
-		throw new UserExistException("UserId exists", new UserResponseDto(userDTO.getName()));
+		throw new UserExistException("UserId exists", userDTO.getName());
 	}
 
 	public UserResponseDto getSingleUser(Long id) {

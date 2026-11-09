@@ -4,16 +4,13 @@ import com.todolistbackend.dto.UserResponseDto;
 
 public class UserExistException extends Exception{
 	private static final long serialVersionUID = 1L;   	
-	private UserResponseDto userResponseDto;
-	public UserExistException(String message, UserResponseDto dto) {
+	private final UserResponseDto userResponseDto = new UserResponseDto();
+	public UserExistException(String message, String username) {
 		super(message);
-		this.setUserResponseDto(dto);
+		this.userResponseDto.setUserName(username);
 	}
 	public UserResponseDto getUserResponseDto() {
 		return userResponseDto;
 	}
-	public void setUserResponseDto(UserResponseDto userResponseDto) {
-		this.userResponseDto = userResponseDto;
-	}
-
+	
 }

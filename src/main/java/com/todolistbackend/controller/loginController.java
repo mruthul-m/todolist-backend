@@ -64,16 +64,24 @@ public class loginController {
 				
 	}
 	
+	@PostMapping("/login")
+	public ResponseEntity<ApiResponse<UserResponseDto>> userLogin(@Valid @RequestBody UserRequestDto requestDto) throws UserExistException {
+		
+		throw new UserExistException("Login worked", null);
+				
+	}
+
+	
 	
 	@PostMapping("/auth")
-	public String userAuth(@RequestBody UserLoginDto authReq) throws UserPrincipalNotFoundException {
+	public String userAuth(@Valid @RequestBody UserLoginDto authReq) throws UserPrincipalNotFoundException {
 		
 		Authentication authentication = 
-		authManager.authenticate(new UsernamePasswordAuthenticationToken(authReq.getUsername(), authReq.getPassword()));
+		authManager.authenticate(new UsernamePasswordAuthenticationToken(authReq.getName(), authReq.getPassword()));
 		
 		if (authentication.isAuthenticated()) {
 			loginLogs.info("User authenticated");
-			String jwtToken = jwtService.generateToken(authReq.getUserName());
+			String jwtToken = jwtService.generateToken(authReq.getName());
 			loginLogs.info("JWT Token: "+ jwtToken);
 			return jwtToken;
 		}else {

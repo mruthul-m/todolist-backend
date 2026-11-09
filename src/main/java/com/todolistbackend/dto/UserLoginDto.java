@@ -9,27 +9,21 @@ public class UserLoginDto implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 
-	private String userName;
+	private String name;
 	private String password;
 
 	public UserLoginDto() { 
 	}
 
-	public UserLoginDto(String userName, String password) {
-		this.userName = userName;
+	public UserLoginDto(String name, String password) {
+		this.setName(name);
 		this.password = password;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -43,7 +37,21 @@ public class UserLoginDto implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return getUserName();
+		return getName();
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return ""+getUsername();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
