@@ -64,14 +64,6 @@ public class loginController {
 				
 	}
 	
-	@PostMapping("/login")
-	public ResponseEntity<ApiResponse<UserResponseDto>> userLogin(@Valid @RequestBody UserRequestDto requestDto) throws UserExistException {
-		
-		throw new UserExistException("Login worked", null);
-				
-	}
-
-	
 	
 	@PostMapping("/auth")
 	public String userAuth(@Valid @RequestBody UserLoginDto authReq) throws UserPrincipalNotFoundException {

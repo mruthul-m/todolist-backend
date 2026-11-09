@@ -11,6 +11,7 @@ import com.todolistbackend.dto.UserLoginDto;
 
 public class UserPrinciple implements UserDetails{
 	
+	private static final long serialVersionUID = 1L;
 	UserLoginDto user;
 	
 	public UserPrinciple(UserLoginDto user) {
@@ -29,7 +30,7 @@ public class UserPrinciple implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return user.getUserName();
+		return user.getName();
 	}
 
 }
